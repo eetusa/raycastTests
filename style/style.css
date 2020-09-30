@@ -1,0 +1,33 @@
+body, html{
+    margin: 0;
+    padding: 0;
+    background-color: rgb(50,50,50);
+}
+body{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#canvas{
+    background-color: rgb(31, 31, 31);
+    margin: 0;
+    padding: 0;
+    position: relative;
+    width: 600px;
+    height: 600px;
+}
+
+#displayWrap{
+    height: 600px;
+    width: 200px;
+    background: rgb(100,100,100);
+    margin: 10px;
+}
+
+#display{
+    font-family: Lucida Console,Lucida Sans Typewriter,monaco,Bitstream Vera Sans Mono,monospace;
+    font-size: 10px;
+    margin: 5px;
+}
