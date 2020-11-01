@@ -226,18 +226,40 @@ function drawPolygon(){
 
 function handleClick(e){
     if (e==0){
-        
+        let inP = 0;
         for (let arr of movables){
             for (let obj of arr){
                 if (obj instanceof Polygon){
                     if (pointInPolygon(mouse, obj.vertices)){
                         console.log("click");
                         obj.followMouse = 1;
-                        
+                        inP = 1;
                         moving.push(obj);
                     }
                 }
             }
+        }
+        if (!inP){
+            if (tempPoints.length==0){
+                tempPoints.push(new Point(mouse.x, mouse.y));
+            } else{
+                
+                if (pointInRadius(tempPoints[0], mouse, 10)){
+                    if (tempPoints.length < 3){
+                        tempPoints = [];
+                    } else{
+                        
+                        polygons.push(new Polygon(tempPoints));
+                        tempPoints = [];
+                        raychecks.pop();
+                        intersections = returnPolygonIntersect(polygons);
+                        raychecks.push(intersections);
+                    }
+                } else{
+                    tempPoints.push(new Point(mouse.x, mouse.y));
+                }
+            }
+            
         }
     } else if (e==1){
         if (moving.length!=0){
@@ -262,6 +284,7 @@ let raychecks = [];
 let source = {};
 let movables = [];
 let moving = [];
+let tempPoints  = [];
 
 let intersections = [];
 
@@ -278,7 +301,7 @@ function init(){
     
     // polygons.push( new Polygon([{x: 200, y: 100},{x:300,y:100}, {x: 350, y:250}, {x: 150, y: 300}, {x: 150, y: 200}]));
     // polygons.push( new Polygon([{x: 000, y: 500},{x:500,y:100}, {x: 550, y:250}]));
-   polygons.addRandomPolygons2(10);
+   polygons.addRandomPolygons2(20);
     
     walls.push(new Boundary(0,0,width,0));
     walls.push(new Boundary(0,0,0,height));
@@ -299,30 +322,28 @@ function init(){
 function animate(){
     
     requestAnimationFrame(animate);
-    c.globalCompositeOperation="source-over";
     removeAllChildNodes(document.getElementById("display"));
     c.clearRect(0,0,canvas.width, canvas.height);
-    c.fillStyle = "white";
-    c.fillText(`o`, mouse.x, mouse.y);
+   
 
     source.update();
     polygons.forEach(polygon => polygon.update());
     walls.forEach(wall => wall.update());
- 
-    const visibleArea = source.look(raychecks, 0);
-   // drawLines(mouse, visibleArea[0].vertices)
-     drawInvertPolygon(visibleArea[0].vertices, 0.8);    
-  //   drawDots(intersections);
-  //   source.drawMasks();
- //   drawLines(source.pos, visibleArea[0].vertices);
 
+    
+    const visibleArea = source.look(raychecks, 0);
+    drawInvertPolygon(visibleArea[0].vertices, 0.8);    
+     
+    source.drawMasks();
+    c.globalCompositeOperation="source-over";
+
+    drawTempPoly(tempPoints);
+    c.fillStyle = "rgb(100,100,100)";
+    c.fillText(`o`, mouse.x, mouse.y);
+  //  drawDots(intersections);
     mouse.pastX = mouse.x;
     mouse.pastY = mouse.y;
     
-
-   // printDisplay("hiiri x y", mouse.x, mouse.y);
-   // printDisplay("angle",returnAngle({x: mouse.x, y: mouse.y},walls[0].a));
-  //  printDisplay("polymäärä",polygons.length);
 
 }
 

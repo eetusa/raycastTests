@@ -5,6 +5,10 @@ function distance(x1, y1, x2, y2){
     return Math.sqrt(Math.pow(x2-x1,2)+Math.pow(y2-y1,2));
 }
 
+function pointInRadius(P1, P2, radius){
+    return distance(P1.x, P1.y, P2.x, P2.y) < radius;
+}
+
 // tests if a point os Left|On|Right on an infinite line
 // return > 0 P2 left of line through P0 and P1
 //        = 0 on line

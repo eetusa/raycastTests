@@ -15,11 +15,12 @@ body{
     margin: 0;
     padding: 0;
     position: relative;
-    width: 600px;
+    width: 1000px;
     height: 600px;
 }
 
 #displayWrap{
+    display: none;
     height: 600px;
     width: 200px;
     background: rgb(100,100,100);

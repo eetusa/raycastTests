@@ -79,12 +79,13 @@ class Particle{
                         rays.push(new Ray(this.pos, angle+e));
                     }
                 } else if (others[i] instanceof Point){
+                    
                     const angle = returnAngle(this.pos, others[i]);
                     rays.push(new Ray(this.pos, angle));
                 }
             }
            // printDisplay(""+rays[0]?.angle);
-           printDisplay(rays.length);
+           printDisplay("rays l: ",rays.length);
           // printDisplay(polygons.length);
             for (let ray of rays){
                 

@@ -1,11 +1,11 @@
-function drawDots(array, size = 2, transparency = 1){
+function drawDots(array, size = 2, transparency = 1, color = "rgb(255,255,255)"){
     if (array.length == 0)return;
     c.globalAlpha = transparency; 
     try{
     for (let i = 0; i < array.length; i++){
         c.beginPath();
         c.arc(array[i].x, array[i].y, size, 0, Math.PI * 2, false);
-        c.fillStyle = "rgb(255,255,255)";
+        c.fillStyle = color;
         c.fill();
         c.closePath();
     }
@@ -32,6 +32,15 @@ function drawLines(start, endPointArray, brightness){
   
       }
 
+}
+
+function drawLine(start, end){
+    c.strokeStyle="rgb(200,200,200)";
+    c.beginPath();
+    c.moveTo(start.x,start.y);
+    c.lineTo(end.x,end.y);
+    c.stroke();
+    c.closePath();
 }
 
 function drawDots2(array, size = 2, transparency = 1){
@@ -105,3 +114,14 @@ function drawInvertPolygon(polygon, alpha){
     c.fill();
     c.globalAlpha=1;
 }
+
+function drawTempPoly(arr){
+    if (arr.length!=0){
+        drawDots(arr,5);
+        for (let i = 0; i < arr.length-1; i++){
+            drawLine(arr[i], arr[i+1])
+        }
+        drawLine(arr[arr.length-1], {x: mouse.x, y: mouse.y});
+    }
+}
+

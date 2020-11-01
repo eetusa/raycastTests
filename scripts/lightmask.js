@@ -18,8 +18,8 @@ class LightMask{
         if (!this.inverse){
             
             
-            c.globalCompositeOperation = "destination-over";
-           //c.globalCompositeOperation = "source-out";
+          //  c.globalCompositeOperation = "destination-over";
+           c.globalCompositeOperation = "source-out";
             const grd = c.createRadialGradient(this.x, this.y, this.startradius, this.x, this.y, this.endradius);
             grd.addColorStop(0, this.color);
             grd.addColorStop(1,"rgba(0,0,0,0)");
